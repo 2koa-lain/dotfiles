@@ -14,6 +14,17 @@
 
 (add-hook 'c-mode-hook 'lsp)
 
+;; Setup backup files to save separately
+(setq backup-directory-alist `(("." . "~/.saves")))
+(setq backup-by-copying t)
+(setq delete-old-versions t
+  kept-new-versions 6
+  kept-old-versions 2
+  version-control t)
+
+;; ==========
+;; USER VARS 
+;; ==========
 
 (setq custom-file(locate-user-emacs-file "comvars.el"))
 (load custom-file 'noerror 'nomessage)
@@ -27,7 +38,8 @@
 
 (recentf-mode 1) ; Remember recent files
 
-(menu-bar-mode nil) 
+(menu-bar-mode -1)
+(tool-bar-mode nil)
 (global-display-line-numbers-mode t) ; Display (an absolute) line number
 
 (load-theme 'titor-emacs' t)
