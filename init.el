@@ -32,6 +32,12 @@
 (setq  inhibit-startup-message t ; Disable Splash Screen
        visible-bell t)
 
+(setq-default indent-tabs-mode t)
+(add-hook 'makefile-mode-hook (lambda () (setq indent-tabs-mode nil)))
+(add-hook 'emacs-lisp-mode (lambda () (setq indent-tabs-mode nil))) ; Damn you stallman!!!
+(setq lsp-headerline-breadcrumb-enable nil) ; Shitty ClangD top bar gone 
+
+(setq-default tab-width 4) 
 (setq history-length 24)
 (savehist-mode 1) ; Remember Minibuffer prompts
 (save-place-mode 1)
@@ -44,3 +50,4 @@
 
 (load-theme 'titor-emacs' t)
 
+(put 'erase-buffer 'disabled nil)
