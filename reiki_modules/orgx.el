@@ -20,7 +20,7 @@
 (add-hook 'org-mode-hook
   (lambda ()
     (variable-pitch-mode 1) 
-    (set-face-attribute 'variable-pitch nil :font "Inter-18")
+    (set-face-attribute 'variable-pitch nil :font "Century Gothic-18")
   
     (set-face-attribute 'org-code nil :inherit 'fixed-pitch)
     (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
