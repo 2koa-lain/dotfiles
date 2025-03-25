@@ -18,5 +18,5 @@
 
 (menu-bar-mode -1)
 (tool-bar-mode nil)
-(global-display-line-numbers-mode t) ; Display (an absolute) line number
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (xterm-mouse-mode t) ; Enable mouse cursor support in the terminal
