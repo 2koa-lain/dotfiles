@@ -1,6 +1,6 @@
-;; MAGICA-FAUX ORG MODE
-;;
-;; ====================
+;;; ORGX - ELISP Module for ORG buffers
+;;  REI Core Module
+;;  Magica-Faux * 2025 
 
 (setq org-adapt-indentation t
       org-hide-leading-stars t
@@ -17,10 +17,11 @@
 (add-hook 'org-mode-hook 'visual-line-mode) ; Adaptive Line Fill
 (add-hook 'org-mode-hook 'variable-pitch-mode)
 (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1)))
+
 (add-hook 'org-mode-hook
   (lambda ()
     (variable-pitch-mode 1) 
-    (set-face-attribute 'variable-pitch nil :font "Century Gothic-18")
+    (set-face-attribute 'variable-pitch nil :font "Inter Display-24")
   
     (set-face-attribute 'org-code nil :inherit 'fixed-pitch)
     (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
@@ -30,7 +31,7 @@
 (require 'org-indent)
 (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
 
-; Set Source code blocks to behave natively 
+;; Set Source code blocks to behave natively 
 (setq org-src-fontify-natively t
 	  org-src-tab-acts-natively t
       org-edit-src-content-indentation 0)

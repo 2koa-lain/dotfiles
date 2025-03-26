@@ -1,11 +1,14 @@
-;; MAGICA-FAUX KEYBINDINGS 
-;; =======================
+;;; KEYS - ELISP Module that controls keybindings
+;;  REI Core Module
+;;  Magica-Faux * 2025 
+
 (global-set-key [C-mouse-4] 'text-scale-increase)
 (global-set-key [C-mouse-5] 'text-scale-decrease)
 (global-set-key [C-S-wheel-up] 'text-scale-increase)
 (global-set-key [C-S-wheel-down] 'text-scale-decrease)
 (global-set-key (kbd "C-<up>") 'text-scale-increase)
 (global-set-key (kbd "C-<down>") 'text-scale-decrease)
+
 (ivy-mode)
 (setopt ivy-use-virtual-buffers t)
 (setopt enable-recursive-minibuffers t)

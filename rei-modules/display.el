@@ -1,15 +1,19 @@
-;; MAGICA-FAUX DISPLAY EL 
-;; ======================
+;;; DISPLAY - ELISP Module that controls theming
+;;  REI Core Module
+;;  Magica-Faux * 2025 
 
 (when (display-graphic-p)
-  (setq default-frame-alist  ; Fallback fonts for GUI
-        '((font . "Iosevka Term-24")
+  (setq default-frame-alist 
+        '((font . "Iosevka Term-24") ; GUI Font
           (vertical-scroll-bars . nil)
           (horizontal-scroll-bars . nil)))
   (load-theme 'meadow-dark' t))
-(add-to-list 'default-frame-alist '(undecorated . t))
+
+;; Uncomment this if you're on OSX
+;(add-to-list 'default-frame-alist '(undecorated . t))
+
 (when (display-graphic-p)
-  (scroll-bar-mode -1)       ; Kill scrollbar
+  (scroll-bar-mode -1)      ; Kill scrollbar
   (set-fringe-mode 0)       ; Kill fringe
   (window-divider-mode -1)) ; Kill window dividers
  

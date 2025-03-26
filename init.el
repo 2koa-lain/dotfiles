@@ -1,8 +1,6 @@
-;; ===============================
-;; Magica-Faux EMACS Configuration
-;; Date of Creation: 17Mar2025
-;; ===============================
-
+;;; INIT - Main Init File for the config
+;;  MAIN
+;;  Magica-Faux * 2025 
 
 (require 'package)
 (setopt package-archives
@@ -18,15 +16,17 @@
 (setq make-backup-files nil)
 (setq auto-save-default nil) ; # type files 
 (setq create-lockfiles nil) 
-;; ==========
-;; USER VARS 
-;; ==========
 
-(setq custom-file(locate-user-emacs-file "comvars.el"))
+;; In case the directory name changes 
+;; we don't have to change it for every single file
+(setq modu-dir (expand-file-name "rei-modules/" user-emacs-directory))
+
+
+(setq custom-file (locate-user-emacs-file "comvars.el"))
 (load custom-file 'noerror 'nomessage)
-(load "~/.emacs.d/reiki_modules/orgx.el") ; Org Mode Config 
-(load "~/.emacs.d/reiki_modules/display.el") ; Theme, GUI Handling  
-(load "~/.emacs.d/reiki_modules/keys.el") ; Keybindings
+(load (expand-file-name "orgx.el" modu-dir))    ; Org Mode Config 
+(load (expand-file-name "display.el" modu-dir)) ; Theme, GUI Handling  
+(load (expand-file-name "keys.el" modu-dir))    ; Keybindings
 
 (setq-default indent-tabs-mode t)
 (add-hook 'makefile-mode-hook (lambda () (setq indent-tabs-mode nil)))
@@ -36,15 +36,14 @@
 (setq-default tab-width 4) 
 (setq history-length 24)
 (setq-default right-margin-width 8) ; Define new widths
-;(setq visual-fill-column-center-text t)
-
-(set-window-buffer nil (current-buffer)) ; Use them now.
 
 
-(savehist-mode 1) ; Remember Minibuffer prompts
+(set-window-buffer nil (current-buffer)) 
+
+
+(savehist-mode 1)  ; Remember Minibuffer prompts
 (save-place-mode 1)
-
-(recentf-mode 1) ; Remember recent files
+(recentf-mode 1)   ; Remember recent files
 
 (put 'erase-buffer 'disabled nil)
 (put 'upcase-region 'disabled nil)
