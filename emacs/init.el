@@ -12,10 +12,13 @@
 (add-hook 'after-init-hook 'global-company-mode)
 (yas-global-mode 1)
 
+
 (add-hook 'c-mode-hook 'lsp)
 (setq make-backup-files nil)
 (setq auto-save-default nil) ; # type files 
-(setq create-lockfiles nil) 
+(setq create-lockfiles nil)
+
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c-mode)) ; LSP gets confused when handling c headers
 
 ;; In case the directory name changes 
 ;; we don't have to change it for every single file
@@ -29,9 +32,14 @@
 (load (expand-file-name "keys.el" modu-dir))    ; Keybindings
 
 (setq-default indent-tabs-mode t)
-(add-hook 'makefile-mode-hook (lambda () (setq indent-tabs-mode nil)))
-(add-hook 'emacs-lisp-mode (lambda () (setq indent-tabs-mode nil))) ; Damn you stallman!!!
-(setq lsp-headerline-breadcrumb-enable nil) ; Shitty ClangD top bar gone 
+(add-hook 'makefile-mode-hook (lambda () (setq indent-tabs-mode t)))
+(add-hook 'emacs-lisp-mode (lambda () (setq indent-tabs-mode nil))) 
+
+(setq lsp-headerline-breadcrumb-enable nil) ; Shitty ClangD top bar gone
+(setq lsp-clients-clangd-args
+      '("--header-insertion=never"))          ; Automatic Header insertion sucks
+(setq flymake-start-on-flymake-mode nil)
+(setq flymake-start-on-save-buffer nil)
 
 (setq-default tab-width 4) 
 (setq history-length 24)
