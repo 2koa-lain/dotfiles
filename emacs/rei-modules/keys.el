@@ -37,5 +37,6 @@
 (global-set-key [C-S-wheel-down] 'text-scale-decrease)
 (global-set-key (kbd "C-<up>") 'text-scale-increase)
 (global-set-key (kbd "C-<down>") 'text-scale-decrease)
+(global-set-key (kbd "C-t") 'treemacs)
 
 (setq search-default-mode #'char-fold-to-regexp)

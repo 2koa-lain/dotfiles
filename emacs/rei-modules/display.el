@@ -2,14 +2,18 @@
 ;;  REI Core Module
 ;;  Magica-Faux * 2025 
 
-(use-package gruvbox-theme
-  :ensure t
-  :config
-  (load-theme 'gruvbox-dark-hard t))
+;(use-package gruvbox-theme
+ ; :ensure t
+ ; :config
+ ; (load-theme 'gruvbox-dark-hard t))
+(load-theme 'manoj-dark t)
+(set-face-background hl-line-face "navy")
+
+(global-hl-line-mode t)
 
 (when (display-graphic-p)
   (setq default-frame-alist 
-        '((font . "Unifont-24")
+        '((font . "ProggyCleanTT-18:antialias=none:hinting=none")
           (vertical-scroll-bars . nil)
           (horizontal-scroll-bars . nil))))
 
