@@ -1,11 +1,4 @@
-;;; display.el --- Additional theme functionality
-;; -*- lexical-binding: t; -*-
-
-
-;(use-package gruvbox-theme
- ; :ensure t
- ; :config
- ; (load-theme 'gruvbox-dark-hard t))
+;;; display.el --- Additional theme functionality -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; 
@@ -13,7 +6,7 @@
 ;;; Code:
 
 (load-theme 'crowview t)
-;(set-face-background hl-line-face "navy")
+
 
 (global-hl-line-mode t)
 
