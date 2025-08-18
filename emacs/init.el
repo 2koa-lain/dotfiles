@@ -1,54 +1,63 @@
-;;; INIT - Main Init File for the config  -*- lexical-binding: t; -*-
-;;  MAIN
-;;  Magica-Faux * 2025 
+;;; init.el --- MAGICA Init Config  -*- lexical-binding: t; -*-
+;;; Commentary:
+;; 
 
-(require 'package)
-(setq package-archives
-        '(("gnu" . "https://elpa.gnu.org/packages/")
-          ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-          ("melpa" . "https://melpa.org/packages/")))
-(package-initialize)
+;;; Code:
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(require 'use-package)
-(setq use-package-always-ensure t)
+
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
+
+
+(use-package el-patch
+  :straight t)
+
 
 (use-package company
+  :straight t
   :config
-  (global-company-mode))
+  (global-company-mode 1))
 
 (use-package treemacs
-  :ensure t
+  :straight t
   :init
   (with-eval-after-load 'winum
-	(define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
   :config
   (setq treemacs-indentation 2
-		treemacs-eldoc-display 'simple))
-
+        treemacs-eldoc-display 'simple))
 
 (use-package hl-todo
-  :ensure t
+  :straight t
   :config
   (setq hl-todo-keyword-faces
-		'(("TODO"    . "orange")
-		  ("WARNING" . "red")
-		  ("FIXME"   . "green")
-		  ("STUB"    . "seashell3")
-		  ("NOTE"    . "yellow")))
+        '(("TODO"    . "orange")
+          ("WARNING" . "red")
+          ("FIXME"   . "green")
+          ("STUB"    . "seashell3")
+          ("NOTE"    . "yellow")))
   (global-hl-todo-mode 1))
-  
-  
-  
 
 (use-package yasnippet
+  :straight t
   :config
   (yas-global-mode 1))
 
 (use-package lsp-mode
+  :straight t
   :init
   (setq lsp-headerline-breadcrumb-enable nil
         lsp-clients-clangd-args '("--header-insertion=never"))
@@ -56,28 +65,33 @@
   (c-mode . lsp))
 
 (use-package flymake
+  :straight t
   :init
   (setq flymake-start-on-flymake-mode nil
         flymake-start-on-save-buffer nil))
 
-(use-package magit)
+(use-package magit
+  :straight t)
 
-(setq make-backup-files nil)
-(setq auto-save-default nil)
-(setq create-lockfiles nil)
+
+(setq make-backup-files nil
+      auto-save-default nil
+      create-lockfiles nil)
 
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c-mode))
 
+(add-to-list 'load-path "~/.emacs.d/rei-modules/")
 (setq modu-dir (expand-file-name "rei-modules/" user-emacs-directory))
 (setq custom-file (locate-user-emacs-file "comvars.el"))
 (load custom-file 'noerror 'nomessage)
-(load (expand-file-name "orgx.el" modu-dir))
-(load (expand-file-name "display.el" modu-dir))
-(load (expand-file-name "keys.el" modu-dir))
+(require 'orgx)
+(require 'display)
+(require 'keys)
 
-(setq indent-tabs-mode t)
+
+(setq-default indent-tabs-mode nil)
 (add-hook 'makefile-mode-hook (lambda () (setq indent-tabs-mode t)))
-(add-hook 'emacs-lisp-mode (lambda () (setq indent-tabs-mode nil)))
+(add-hook 'emacs-lisp-mode-hook (lambda () (setq indent-tabs-mode nil)))
 
 (setq-default tab-width 4)
 (setq history-length 24)
@@ -85,38 +99,23 @@
 
 (set-window-buffer nil (current-buffer))
 
+
 (use-package savehist
+  :straight t
   :config (savehist-mode 1))
 
 (use-package saveplace
+  :straight t
   :config (save-place-mode 1))
 
 (use-package recentf
+  :straight t
   :config (recentf-mode 1))
 
 (put 'erase-buffer 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
 
-(defun ada-mode--find-alire (dir)
-  ;; Look up-tree, starting at dir, for alire.toml; return its full
-  ;; path name if found, nil if not.
-  (let ((alire (locate-dominating-file dir "alire.toml")))
-    (if alire
-      (cons 'transient alire)
-      nil)))
- (defun ada-mode--find-gpr (dir)
-  ;; Look up-tree, starting at dir, for a .gpr file, returning its
-  ;; full path name if found, nil if not.
-  (let ((gpr (locate-dominating-file
-              dir
-              (lambda (dir) (directory-files dir nil "gpr"))
-              )))
-    (if gpr
-      (cons 'transient gpr)
-      nil)))
- (use-package project
-  :config
-  (add-hook 'project-find-functions #'ada-mode--find-gpr)
-  (add-hook 'project-find-functions #'ada-mode--find-alire)
-  )
+(provide 'init)
+
+;;; init.el ends here
