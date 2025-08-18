@@ -1,6 +1,8 @@
-;;; ORGX - ELISP Module for ORG buffers
-;;  REI Core Module
-;;  Magica-Faux * 2025 
+;;; orgx.el --- ORG Mode Functionality  -*- lexical-binding: t; -*-
+
+;;; Commentary:
+;; 
+;;; Code:
 
 (use-package org
   :config
@@ -14,13 +16,12 @@
         org-edit-src-content-indentation 0))
 
 (use-package org-superstar
-  :ensure t
   :after org
   :hook (org-mode . org-superstar-mode))
 
 (use-package olivetti
-  :ensure t
   :hook (org-mode . olivetti-mode))
+
 
 (require 'org-indent)
   (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
@@ -31,8 +32,12 @@
 
 (add-hook 'org-mode-hook
   (lambda ()
-    (variable-pitch-mode 1) 
+    (variable-pitch-mode 1)
     (set-face-attribute 'variable-pitch nil :font "Inter Display-24")
     (set-face-attribute 'org-code nil :inherit 'fixed-pitch)
     (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
     (set-face-attribute 'org-table nil :inherit 'fixed-pitch)))
+
+(provide 'orgx)
+
+;;; orgx.el ends here

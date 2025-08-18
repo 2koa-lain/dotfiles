@@ -1,19 +1,25 @@
-;;; DISPLAY - ELISP Module that controls theming
-;;  REI Core Module
-;;  Magica-Faux * 2025 
+;;; display.el --- Additional theme functionality
+;; -*- lexical-binding: t; -*-
+
 
 ;(use-package gruvbox-theme
  ; :ensure t
  ; :config
  ; (load-theme 'gruvbox-dark-hard t))
-(load-theme 'manoj-dark t)
-(set-face-background hl-line-face "navy")
+
+;;; Commentary:
+;; 
+
+;;; Code:
+
+(load-theme 'crowview t)
+;(set-face-background hl-line-face "navy")
 
 (global-hl-line-mode t)
 
 (when (display-graphic-p)
-  (setq default-frame-alist 
-        '((font . "ProggyCleanTT-18:antialias=none:hinting=none")
+  (setq default-frame-alist
+        '((font . "ProggyCleanTT-18:antialias=true:hinting=true")
           (vertical-scroll-bars . nil)
           (horizontal-scroll-bars . nil))))
 
@@ -29,3 +35,7 @@
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (xterm-mouse-mode t)
+
+(provide 'display)
+
+;;; display.el ends here

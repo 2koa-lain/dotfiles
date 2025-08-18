@@ -1,6 +1,8 @@
-;;; KEYS - ELISP Module that controls keybindings
-;;  REI Core Module
-;;  Magica-Faux * 2025 
+;;; keys.el --- Magica-Faux Keybindings -*- lexical-binding: t; -*-
+;;; Commentary:
+;; 
+
+;;; Code:
 
 (use-package ivy
   :ensure t
@@ -40,3 +42,7 @@
 (global-set-key (kbd "C-t") 'treemacs)
 
 (setq search-default-mode #'char-fold-to-regexp)
+
+(provide 'keys)
+
+;;; keys.el ends here
