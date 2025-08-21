@@ -6,38 +6,41 @@
 
 (use-package org
   :config
-  (setq org-adapt-indentation t
+  (setq org-adapt-indentation nil
         org-hide-leading-stars t
+        org-indent-indentation-per-level 4
         org-hide-emphasis-markers t
         org-pretty-entities t
-        org-ellipsis "  ·"
+        org-ellipsis "->"
         org-src-fontify-natively t
         org-src-tab-acts-natively t
         org-edit-src-content-indentation 0))
 
 (use-package org-superstar
+  :straight t
   :after org
   :hook (org-mode . org-superstar-mode))
 
 (use-package olivetti
+  :straight t
   :hook (org-mode . olivetti-mode))
 
 
 (require 'org-indent)
-  (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+(set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
 
-(add-hook 'org-mode-hook 'visual-line-mode)
-(add-hook 'org-mode-hook 'variable-pitch-mode)
-(add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1)))
+(defun rei/org ()
+  (variable-pitch-mode 1)
+  (fringe-mode 1)
+  (visual-line-mode 1)
+  (setq-local global-hl-line-mode nil)
+  (display-line-numbers-mode -1)
+  (set-face-attribute 'variable-pitch nil :font "Consolas-14")
+  (set-face-attribute 'org-code nil  :inherit 'fixed-pitch)
+  (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-table nil :inherit 'fixed-pitch))
 
-(add-hook 'org-mode-hook
-  (lambda ()
-    (variable-pitch-mode 1)
-    (set-face-attribute 'variable-pitch nil :font "Inter Display-24")
-    (set-face-attribute 'org-code nil :inherit 'fixed-pitch)
-    (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
-    (set-face-attribute 'org-table nil :inherit 'fixed-pitch)))
-
+(add-hook 'org-mode-hook #'rei/org)
 (provide 'orgx)
 
 ;;; orgx.el ends here
