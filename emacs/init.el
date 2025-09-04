@@ -1,4 +1,5 @@
 ;;; init.el --- MAGICA Init Config  -*- lexical-binding: t; -*-
+
 ;;; Commentary:
 ;; 
 
@@ -21,15 +22,36 @@
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
+(defvar init/packages '(el-patch
+			elfeed
+			project
+			projectile
+			company
+			marginalia
+			lsp-ui
+			treemacs
+			hl-todo
+			yasnippet
+			header2
+			rainbow-delimiters
+			magit
+			lua-mode
+			pdf-tools
+			consult)
+  "Essential packages for EMACS.")
 
-(use-package el-patch
-  :straight t)
-
-
-(use-package company
+(dolist (package init/packages)
+  (straight-use-package package))
+(pdf-loader-install)
+					       
+(use-package marginalia
   :straight t
-  :config
-  (global-company-mode 1))
+  :bind
+  (:map minibuffer-local-map
+        ("M-A" . marginalia-cycle)))
+
+
+
 
 (use-package treemacs
   :straight t
@@ -40,82 +62,41 @@
   (setq treemacs-indentation 2
         treemacs-eldoc-display 'simple))
 
-(use-package hl-todo
-  :straight t
-  :config
-  (setq hl-todo-keyword-faces
-        '(("TODO"    . "orange")
-          ("WARNING" . "red")
-          ("FIXME"   . "green")
-          ("STUB"    . "seashell3")
-          ("NOTE"    . "yellow")))
-  (global-hl-todo-mode 1))
+(add-to-list 'load-path "~/.emacs.d/lisp/")
 
-(use-package yasnippet
-  :straight t
-  :config
-  (yas-global-mode 1))
-
-(use-package lsp-mode
-  :straight t
-  :init
-  (setq lsp-headerline-breadcrumb-enable nil
-        lsp-clients-clangd-args '("--header-insertion=never"))
-  :hook
-  (c-mode . lsp))
-
-(use-package flymake
-  :straight t
-  :init
-  (setq flymake-start-on-flymake-mode nil
-        flymake-start-on-save-buffer nil))
-
-(use-package magit
-  :straight t)
-
-
-(setq make-backup-files nil
-      auto-save-default nil
-      create-lockfiles nil)
-
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c-mode))
-
-(add-to-list 'load-path "~/.emacs.d/rei-modules/")
-(setq modu-dir (expand-file-name "rei-modules/" user-emacs-directory))
 (setq custom-file (locate-user-emacs-file "comvars.el"))
 (load custom-file 'noerror 'nomessage)
 (require 'orgx)
 (require 'display)
 (require 'keys)
+(require 'maji-prog)
+
+(defun init/modes ()
+  "Global Modes for CONFIG."
+   (global-company-mode) 
+   (recentf-mode) 
+   (savehist-mode) 
+   (marginalia-mode) 
+   (save-place-mode))
+
+(defun init/setvars ()
+  "Global variables for CONFIG."
+  (setq
+   tab-width 4
+   history-length 24
+   right-margin-width 8
+   
+   auto-save-default nil
+   create-lockfiles nil))
 
 
-(setq-default indent-tabs-mode nil)
-(add-hook 'makefile-mode-hook (lambda () (setq indent-tabs-mode t)))
-(add-hook 'emacs-lisp-mode-hook (lambda () (setq indent-tabs-mode nil)))
-
-(setq-default tab-width 4)
-(setq history-length 24)
-(setq-default right-margin-width 8)
-
-(set-window-buffer nil (current-buffer))
-
-
-(use-package savehist
-  :straight t
-  :config (savehist-mode 1))
-
-(use-package saveplace
-  :straight t
-  :config (save-place-mode 1))
-
-(use-package recentf
-  :straight t
-  :config (recentf-mode 1))
-
-(put 'erase-buffer 'disabled nil)
-(put 'upcase-region 'disabled nil)
-
-
+(setq gnus-select-method '(nntp "news.gwene.org"))
+(setq gnus-secondary-select-methods
+      '((nntp "news.gwene.org")))
+(setq backup-directory-alist '((".*" . "~/.emacsbk")))
+(init/modes)
+(init/setvars)
+(maji/display)
 (provide 'init)
 
 ;;; init.el ends here
